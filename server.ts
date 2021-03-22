@@ -18,6 +18,8 @@ app.post("/posts", (req, res) => {
     res.json({message:"Thanks for your response", datarecieved: recieveddata})
 })
 
-app.listen(4000, () => {
-    console.log("server has started on port 4000")
-});
+const portNumber = process.env.PORT;
+
+app.listen(portNumber, () => {
+    console.log(`server has started on ${portNumber} port`)
+    });
