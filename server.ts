@@ -20,18 +20,17 @@ client.connect()
 
 app.get("/posts", async(req, res) => {
     const allPosts = await client.query("SELECT * FROM posts");
-    // res.json(allPosts.rows);
-    console.log(allPosts);
-    res.json({message: "hello", data: allPosts.rows });
+    const dataToReturn = allPosts.rows;
+    res.json({message: "hello", data: dataToReturn });
 });
 
-app.post("/posts", (req, res) => {
-    const recieveddata = req.body;
-    res.json({message:"Thanks for your response", datarecieved: recieveddata})
+app.post("/posts", async(req, res) => {
+    const {title, content} = req.body;
+    const newPost = await client.query("INSERT INTO posts (title, content) VALUES($1, $2) RETURNING *", [title, content]);
+    res.json({message:"Thanks for your response", datarecieved: newPost.rows});
 })
 
 const portNumber = process.env.PORT;
-
 app.listen(portNumber, () => {
     console.log(`server has started on ${portNumber} port`)
     });
