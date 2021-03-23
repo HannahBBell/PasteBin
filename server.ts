@@ -10,7 +10,7 @@ app.use(express.json()); //parse json body in requests
 app.use(cors());
 
 const client = new Client({
-    connectionString: process.env.URI,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
