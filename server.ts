@@ -19,9 +19,9 @@ const client = new Client({
 client.connect()
 
 app.get("/posts", async(req, res) => {
-    const allPosts = await client.query("SELECT * FROM posts");
+    const allPosts = await client.query("SELECT * FROM posts ORDER BY id DESC");
     const dataToReturn = allPosts.rows;
-    res.json({message: "hello", data: dataToReturn });
+    res.json({data: dataToReturn});
 });
 
 app.post("/posts", async(req, res) => {
