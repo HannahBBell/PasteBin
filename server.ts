@@ -28,7 +28,13 @@ app.post("/posts", async(req, res) => {
     const {title, content} = req.body;
     const newPost = await client.query("INSERT INTO posts (title, content) VALUES($1, $2) RETURNING *", [title, content]);
     res.json({message:"Thanks for your response", datarecieved: newPost.rows});
-})
+});
+
+app.delete("/posts/:id", async(req, res) => {
+    const {id} = req.params;
+    await client.query("DELETE FROM posts WHERE id = $1", [id]);
+    res.json("Post was deleted");
+});
 
 const portNumber = process.env.PORT;
 app.listen(portNumber, () => {
