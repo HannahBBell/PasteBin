@@ -36,6 +36,13 @@ app.delete("/posts/:id", async(req, res) => {
     res.json("Post was deleted");
 });
 
+app.put("/posts/:id", async(req, res) => {
+    const {id} = req.params;
+    const {title, content} = req.body;
+    await client.query("UPDATE posts SET title = $1, content=$2 WHERE id = $3", [title, content, id]);
+    res.json("Post was updated");
+});
+
 const portNumber = process.env.PORT;
 app.listen(portNumber, () => {
     console.log(`server has started on ${portNumber} port`)
